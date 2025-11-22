@@ -35,36 +35,14 @@
         /* Летающий динамит из Minecraft */
         .minecraft-tnt {
             position: fixed;
-            width: 40px;
-            height: 60px;
-            background: linear-gradient(45deg, #ff4444, #cc0000);
+            width: 50px;
+            height: 80px;
+            background-image: url('https://i.pinimg.com/736x/16/d0/67/16d067a19286ffe23a690deae2492674.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
             z-index: -1;
-            animation: floatTnt 15s infinite linear;
-            border-radius: 3px;
-            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
-        }
-        
-        .minecraft-tnt:before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 5px;
-            width: 30px;
-            height: 10px;
-            background: #333;
-            border-radius: 2px;
-        }
-        
-        .minecraft-tnt:after {
-            content: '';
-            position: absolute;
-            top: 25px;
-            left: 15px;
-            width: 10px;
-            height: 20px;
-            background: #fff;
-            border-radius: 1px;
-            opacity: 0.7;
+            animation: floatTnt 20s infinite linear;
+            filter: drop-shadow(0 0 8px rgba(255, 68, 68, 0.7));
         }
         
         @keyframes floatTnt {
@@ -245,6 +223,7 @@
             font-size: 40px;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .video-thumbnail:after {
@@ -255,19 +234,60 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.3);
+            transition: background 0.3s;
+        }
+        
+        .video-thumbnail:hover:after {
+            background: rgba(0, 0, 0, 0.1);
         }
         
         .video-thumbnail i {
             z-index: 2;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
         }
         
-        /* Стили для реального видео */
-        .video-player {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
+        .video-thumbnail:hover i {
+            transform: scale(1.2);
+        }
+        
+        /* Модальное окно для видео */
+        .video-modal {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .video-modal-content {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+        }
+        
+        .video-modal video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #f72585;
         }
         
         .video-info {
@@ -346,30 +366,250 @@
             transform: scale(1.2);
         }
         
-        /* Аудио сообщения */
-        .audio-messages {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
+        /* Футер */
+        footer {
+            background: rgba(10, 10, 22, 0.9);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #1a5a8a;
+            margin-top: 60px;
         }
         
-        .audio-item {
-            background: rgba(26, 34, 57, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .audio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-        
-        .audio-title {
+        .footer-logo {
+            font-size: 24px;
             margin-bottom: 15px;
             color: #4cc9f0;
+        }
+        
+        .footer-text {
+            color: #a0a0a0;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .social-links {
             display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: #b8d4e3;
+            font-size: 20px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #4cc9f0;
+            transform: translateY(-3px);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .slideshow-container {
+                height: 300px;
+            }
+            
+            .video-modal-content {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div id="particles-js"></div>
+    
+    <!-- Летающий динамит -->
+    <div class="minecraft-tnt" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+    <div class="minecraft-tnt" style="top: 60%; left: 80%; animation-delay: 2s; animation-duration: 18s;"></div>
+    <div class="minecraft-tnt" style="top: 30%; left: 70%; animation-delay: 5s; animation-duration: 20s;"></div>
+    <div class="minecraft-tnt" style="top: 80%; left: 20%; animation-delay: 7s; animation-duration: 16s;"></div>
+
+    <!-- Модальное окно для видео -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <video id="modalVideo" controls>
+                Ваш браузер не поддерживает видео элементы.
+            </video>
+        </div>
+    </div>
+
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Asynco<span>Craft</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#videos"><i class="fas fa-play-circle"></i> Видео</a></li>
+                        <li><a href="#slideshow"><i class="fas fa-images"></i> Слайд-шоу</a></li>
+                        <li><a href="#join"><i class="fas fa-gamepad"></i> Присоединиться</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero">
+        <div class="container">
+            <h1>Добро пожаловать на AsyncoCraft!</h1>
+            <p>Minecraft сервер от создателей ExtraGram с уникальными возможностями и увлекательным геймплеем</p>
+            <a href="#join" class="btn"><i class="fas fa-gamepad"></i> Присоединиться сейчас</a>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Видео галерея -->
+        <section id="videos" class="section">
+            <h2 class="section-title">Видео с сервера</h2>
+            <div class="video-gallery">
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m1.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>Обзор сервера (m1)</h3>
+                        <p>Первый взгляд на возможности AsyncoCraft. Узнайте, что делает наш сервер уникальным.</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m2.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>Геймплей PvP (m2)</h3>
+                        <p>Захватывающие битвы на нашем сервере. Тактики и стратегии для победы.</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m3.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>Строительство (m3)</h3>
+                        <p>Лучшие постройки нашего комьюнити. Вдохновляйтесь и создавайте свои шедевры.</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m4.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>Моды и плагины (m4)</h3>
+                        <p>Обзор кастомных модов и плагинов, доступных на нашем сервере.</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m5.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>События (m5)</h3>
+                        <p>Запись самых ярких событий и ивентов, проводимых на сервере.</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail" data-video="m6.mp4">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="video-info">
+                        <h3>Гайд для новичков (m6)</h3>
+                        <p>Все, что нужно знать новым игрокам для успешного старта на сервере.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд-шоу -->
+        <section id="slideshow" class="section">
+            <h2 class="section-title">Слайд-шоу</h2>
+            <div class="slideshow-container">
+                <div class="slide active" style="background: linear-gradient(45deg, #0f4c75, #1b6ca8);">
+                    <div class="slide-content">
+                        <h3>Добро пожаловать в мир AsyncoCraft! (s1)</h3>
+                        <p>Уникальный Minecraft сервер с кастомными механиками и активным сообществом</p>
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(45deg, #1b4332, #2d6a4f);">
+                    <div class="slide-content">
+                        <h3>Уникальные механики и моды (s2)</h3>
+                        <p>Только на нашем сервере: эксклюзивные плагины и моды, созданные специально для вас</p>
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(45deg, #5a189a, #7b2cbf);">
+                    <div class="slide-content">
+                        <h3>Активное и дружелюбное сообщество (s3)</h3>
+                        <p>Присоединяйтесь к нашему растущему комьюнити игроков со всего мира</p>
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(45deg, #9d0208, #d00000);">
+                    <div class="slide-content">
+                        <h3>Регулярные события и обновления (s4)</h3>
+                        <p>Мы постоянно добавляем новый контент и проводим интересные ивенты</p>
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(45deg, #e85d04, #f48c06);">
+                    <div class="slide-content">
+                        <h3>PvP и мини-игры (s5)</h3>
+                        <p>Сражайтесь с другими игроками и участвуйте в захватывающих мини-играх</p>
+                    </div>
+                </div>
+                <div class="slide" style="background: linear-gradient(45deg, #3a0ca3, #4361ee);">
+                    <div class="slide-content">
+                        <h3>Экономика и кланы (s6)</h3>
+                        <p>Создавайте кланы, торгуйте и развивайте свою экономику на сервере</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-controls">
+                <div class="slide-btn active" data-index="0"></div>
+                <div class="slide-btn" data-index="1"></div>
+                <div class="slide-btn" data-index="2"></div>
+                <div class="slide-btn" data-index="3"></div>
+                <div class="slide-btn" data-index="4"></div>
+                <div class="slide-btn" data-index="5"></div>
+            </div>
+        </section>
+
+        <!-- Присоединиться -->
+        <section id="join" class="section">
+            <h2 class="section-title">Присоединиться к серверу</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="margin-bottom: 20px;">
+                    Чтобы присоединиться к нашему серверу, выполните следующие шаги:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background: rgba(26, 34, 57, 0.8); padding: 20px; border-radius: 10px;">
+                        <h3 style="color: #4cc9f0; margin-bottom: 15px;">1. Откройте Minecraft</h3>
+                        <pflex;
             align-items: center;
             gap: 10px;
         }
