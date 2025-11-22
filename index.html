@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsyncoCraft - Minecraft сервер</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Шапка */
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 0;
+            border-bottom: 2px solid #0f4c75;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+        }
+        
+        .logo span {
+            color: #f72585;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: #e6e6e6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #4cc9f0;
+        }
+        
+        /* Герой-секция */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #f72585;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #b5179e;
+        }
+        
+        /* Секции контента */
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4cc9f0;
+            text-align: center;
+        }
+        
+        /* Видео галерея */
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .video-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: #0f4c75;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+        }
+        
+        .video-info {
+            padding: 15px;
+        }
+        
+        .video-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* Слайд-шоу */
+        .slideshow {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .slide-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .slide-btn.active {
+            background: #4cc9f0;
+        }
+        
+        /* Аудио сообщения */
+        .audio-messages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .audio-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .audio-title {
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        audio {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        /* Футер */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid #0f4c75;
+            margin-top: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+        }
+        
+        .footer-text {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Asynco<span>Craft</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#videos">Видео</a></li>
+                        <li><a href="#slideshow">Слайд-шоу</a></li>
+                        <li><a href="#audio">Аудио</a></li>
+                        <li><a href="#about">О сервере</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero">
+        <div class="container">
+            <h1>Добро пожаловать на AsyncoCraft!</h1>
+            <p>Minecraft сервер от создателей ExtraGram с уникальными возможностями и увлекательным геймплеем</p>
+            <a href="#" class="btn">Присоединиться сейчас</a>
+        </div>
+    </section>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Видео галерея -->
+        <section id="videos" class="section">
+            <h2 class="section-title">Видео с сервера</h2>
+            <div class="video-gallery">
+                <div class="video-item">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3>Обзор сервера</h3>
+                        <p>Первый взгляд на возможности AsyncoCraft</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3>Геймплей PvP</h3>
+                        <p>Захватывающие битвы на нашем сервере</p>
+                    </div>
+                </div>
+                <div class="video-item">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3>Строительство</h3>
+                        <p>Лучшие постройки нашего комьюнити</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайд-шоу -->
+        <section id="slideshow" class="section">
+            <h2 class="section-title">Слайд-шоу</h2>
+            <div class="slideshow">
+                <div class="slide active" style="background-color: #0f4c75;">
+                    <div>Добро пожаловать в мир AsyncoCraft!</div>
+                </div>
+                <div class="slide" style="background-color: #1b4332;">
+                    <div>Уникальные механики и моды</div>
+                </div>
+                <div class="slide" style="background-color: #5a189a;">
+                    <div>Активное и дружелюбное сообщество</div>
+                </div>
+                <div class="slide" style="background-color: #9d0208;">
+                    <div>Регулярные события и обновления</div>
+                </div>
+            </div>
+            <div class="slide-controls">
+                <div class="slide-btn active" data-index="0"></div>
+                <div class="slide-btn" data-index="1"></div>
+                <div class="slide-btn" data-index="2"></div>
+                <div class="slide-btn" data-index="3"></div>
+            </div>
+        </section>
+
+        <!-- Аудио сообщения -->
+        <section id="audio" class="section">
+            <h2 class="section-title">Аудио сообщения</h2>
+            <div class="audio-messages">
+                <div class="audio-item">
+                    <h3 class="audio-title">Приветствие от создателей</h3>
+                    <audio controls>
+                        <source src="#" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио элементы.
+                    </audio>
+                    <p>Основатели сервера приветствуют новых игроков</p>
+                </div>
+                <div class="audio-item">
+                    <h3 class="audio-title">Обновление 1.18</h3>
+                    <audio controls>
+                        <source src="#" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио элементы.
+                    </audio>
+                    <p>Что нового в последнем обновлении сервера</p>
+                </div>
+                <div class="audio-item">
+                    <h3 class="audio-title">Советы для новичков</h3>
+                    <audio controls>
+                        <source src="#" type="audio/mpeg">
+                        Ваш браузер не поддерживает аудио элементы.
+                    </audio>
+                    <p>Полезные советы для начала игры на сервере</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- О сервере -->
+        <section id="about" class="section">
+            <h2 class="section-title">О сервере AsyncoCraft</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 20px;">
+                AsyncoCraft - это уникальный Minecraft сервер, созданный командой разработчиков ExtraGram. 
+                Мы предлагаем увлекательный геймплей с кастомными механиками, регулярными событиями и дружелюбным сообществом.
+            </p>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto;">
+                Присоединяйтесь к нам и станьте частью нашего растущего комьюнити! 
+                На сервере вас ждут захватывающие приключения, уникальные моды и возможность проявить свои творческие способности.
+            </p>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">AsyncoCraft</div>
+            <p class="footer-text">Minecraft сервер от создателей ExtraGram</p>
+            <p class="footer-text">© 2023 AsyncoCraft. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Слайд-шоу
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const slideBtns = document.querySelectorAll('.slide-btn');
+            let currentSlide = 0;
+            
+            // Функция для показа слайда
+            function showSlide(index) {
+                // Скрываем все слайды
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Убираем активный класс со всех кнопок
+                slideBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Показываем выбранный слайд
+                slides[index].classList.add('active');
+                slideBtns[index].classList.add('active');
+                currentSlide = index;
+            }
+            
+            // Обработчики для кнопок слайд-шоу
+            slideBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    showSlide(index);
+                });
+            });
+            
+            // Автоматическая смена слайдов
+            setInterval(() => {
+                let nextSlide = currentSlide + 1;
+                if (nextSlide >= slides.length) {
+                    nextSlide = 0;
+                }
+                showSlide(nextSlide);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
